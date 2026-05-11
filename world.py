@@ -1,5 +1,5 @@
-from ecs.entity_manager import EntityManager
-from ecs.registry import ComponentRegistry
+from entity_manager import EntityManager
+from registry import ComponentRegistry
 
 class World : 
 

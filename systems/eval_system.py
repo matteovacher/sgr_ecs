@@ -1,4 +1,4 @@
-from ecs.tools.hyperneat_base.robot_simulator import RobotSimulator
+from tools.hyperneat_base.robot_simulator import RobotSimulator
 
 from pathos.multiprocessing import ProcessPool
 import dill 

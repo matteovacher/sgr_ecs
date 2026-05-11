@@ -1,4 +1,4 @@
-from ecs.registry import ComponentRegistry
+from registry import ComponentRegistry
 
 class SpeciationSystem : 
     def __init__(self) : 

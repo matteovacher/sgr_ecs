@@ -1,4 +1,4 @@
-from ecs.components import *
+from components import *
 
 class ComponentRegistry : 
 
@@ -58,7 +58,7 @@ class ComponentRegistry :
         return entity_id in self.body_registry
     
     def has_controller_network(self, entity_id) : 
-        return entity_id in self.controller_registry
+        return entity_id in self.controller_network_registry
     
     def has_fitness(self, entity_id) : 
         return entity_id in self.fitness_registry
@@ -93,7 +93,7 @@ class ComponentRegistry :
     # CLEARER METHODS 
     def  clear_all_except_genome(self) : 
         self.body_registry.clear()
-        self.controller_registry.clear()
+        self.controller_network_registry.clear()
         self.fitness_registry.clear()   
         self.morphology_network_registry.clear()
         self.cppn_registry.clear()

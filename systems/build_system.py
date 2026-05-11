@@ -1,16 +1,16 @@
-from ecs.registry import ComponentRegistry
-from ecs.components import CPPNComponent, GenomeComponent, MorphologyNetworkComponent, BodyComponent, ControllerNetworkComponent
-from ecs.tools.hyperneat_base.substrate import Substrate 
-from ecs.tools.hyperneat_base.robot_generator import RobotGenerator
-from ecs.tools.hyperneat_base.robot_simulator import RobotSimulator
-from ecs.tools.hyperneat_base.hyperneat import PhenotypeBuilder
+from registry import ComponentRegistry
+from components import CPPNComponent, GenomeComponent, MorphologyNetworkComponent, BodyComponent, ControllerNetworkComponent
+from tools.hyperneat_base.substrate import Substrate 
+from tools.hyperneat_base.robot_generator import RobotGenerator
+from tools.hyperneat_base.robot_simulator import RobotSimulator
+from tools.hyperneat_base.hyperneat import PhenotypeBuilder
 
 import neat 
 import math 
 
 class BuildSystem : 
-    def __init__(self, neat_config, robot_size, env_name, n_steps) :
-        self.neat_config = neat_config
+    def __init__(self, config, robot_size, env_name, n_steps) :
+        self.config = config
         self.robot_size = robot_size
         self.env_name = env_name
         self.n_steps = n_steps
@@ -20,7 +20,6 @@ class BuildSystem :
         self.robot_simulator = RobotSimulator(env_name, n_steps)
         
 
-         
 
     def process(self, registry) : 
         
@@ -29,7 +28,7 @@ class BuildSystem :
             genome = registry.get_genome(entity_id).genome 
 
             # then create cppn and stock it to use it 
-            cppn = neat.nn.FeedForwardNetwork.create(genome, self.neat_config)
+            cppn = neat.nn.FeedForwardNetwork.create(genome, self.config)
             registry.add_cppn(entity_id, cppn)
 
             # then proceed to create substrate, first morpho 
