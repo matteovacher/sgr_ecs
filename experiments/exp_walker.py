@@ -24,6 +24,8 @@ class WalkerExperiment :
         self.world.add_system(EvaluationSystem(sgr_config.env, sgr_config.steps, sgr_config.cpus))
 
         self.pop = neat.Population(self.config)
+        self.pop.add_reporter(neat.StdOutReporter(True))
+
 
     def _create_config(self, sgr_config) :
         config = neat.Config(MorphoAwareGenome, 
@@ -44,10 +46,22 @@ class WalkerExperiment :
         config.genome_config.output_keys = [1, 2]
 
         return config
-
-
-
-
-
     
-    
+    def _neat_fitness_function(self, genomes, config) : 
+        self.world.reset()
+
+        for genome_id, genome in genomes : 
+            self.world.add_genome(genome_id, genome)
+
+        self.world.step()
+
+        for genome_id, genome in genomes : 
+            if self.world.registry.has_fitness(genome_id) : 
+                genome.fitness = self.world.registry.get_fitness(genome_id)
+            else : 
+                genome.fitness = -10000
+        
+    def run(self, n_gens) :
+        return self.pop.run(self._neat_fitness_function, n_gens)
+
+        
